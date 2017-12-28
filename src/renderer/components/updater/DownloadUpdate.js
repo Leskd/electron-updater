@@ -17,7 +17,9 @@ export default class DownloadUpdate extends Component {
     const megaBytesTransferred = Math.round((transferred / 1000000) * 100) / 100;
     const megaBytesTotal = Math.round((total / 1000000) * 100) / 100;
     percent = Math.round(percent);
-
+    console.log('percent',percent)
+    console.log('total', megaBytesTotal);
+    console.log('transferred',megaBytesPerSecond )
     // TODO: Check back on this periodically to see if 'quitAndInstall' works so we can get rid of instructions pertaining to shutting down appium.
     return <div className={UpdaterStyles['download-updates-container']}>
       <div>

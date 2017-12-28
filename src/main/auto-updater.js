@@ -1,16 +1,18 @@
 import { autoUpdater } from 'electron-updater';
 import { ipcMain, BrowserWindow, Menu } from 'electron';
 import path from 'path';
+import log from 'electron-log';
 import _ from 'lodash';
-import request from 'request-promise';
 import { version } from '../../package.json';
-import B from 'bluebird';
-import settings from '../settings'
+
 
 const isDev = process.env.NODE_ENV === 'development';
 autoUpdater.autoDownload = false;
 
+autoUpdater.logger = log;
+autoUpdater.logger.transports.file.level = 'info';
 
+log.info('Auto updater starting');
 class AutoUpdaterController {
   constructor () {
     this.updaterWin = null;
@@ -68,8 +70,9 @@ class AutoUpdaterController {
   }
 
   handleDownloadProgress (downloadProgress) {
-    console.info('Downloading...', downloadProgress);
+    log.info('Downloading...', downloadProgress);
     this.setState({
+      status: 'Downloading',
       downloadProgress
     });
   }
@@ -100,7 +103,7 @@ class AutoUpdaterController {
   }
 
 
-  async checkForUpdates () {
+  checkForUpdates () {
     const isWin = process.platform === 'win32';
     const isMac = process.platform === 'darwin';
     const SQUIRREL_FIRST_RUN = 'SQUIRREL_FIRST_RUN';
@@ -108,10 +111,7 @@ class AutoUpdaterController {
     if (isMac || isWin) {
       console.info('Checking for updates');
 
-      if (isWin && !await settings.get(SQUIRREL_FIRST_RUN)) {
-        await B.delay(20000);
-        await settings.set(SQUIRREL_FIRST_RUN, true);
-      }
+
       this.setState({
         isCheckingForUpdates: true,
       })

@@ -16,6 +16,7 @@ export default class FoundUpdate extends Component {
 
     return <div className={UpdaterStyles['update-error-container']}>
       <p>Could not download update. Get the latest version at:</p>
+      {error && <p>{error.code}</p>}
       <a href='#' onClick={(e) => e.preventDefault() || shell.openExternal(latestReleaseUrl)}>{latestReleaseUrl}</a>
       <footer>
         <Button onClick={() => remote.getCurrentWindow().close()}>OK</Button>

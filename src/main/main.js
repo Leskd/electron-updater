@@ -49,7 +49,6 @@ function creatWindow(){
      })
 
      autoUpdaterController.setMainWindow(mainWindow);
-     autoUpdaterController.checkForUpdates();
 }
 // 当Electron完成初始化并且已经创建了浏览器窗口，则该方法将会被调用。
 app.on('ready', creatWindow);

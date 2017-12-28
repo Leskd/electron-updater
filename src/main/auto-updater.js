@@ -34,7 +34,7 @@ class AutoUpdaterController {
 
   downloadUpdate () {
     this.updaterWin.setSize(500, 150);
-    this.setSate({
+    this.setState({
       downloadProgress: {
         percent:0
       }
@@ -43,17 +43,8 @@ class AutoUpdaterController {
   }
 
   
-  async handleUpdateAvailable (updateInfo) {
+  handleUpdateAvailable (updateInfo) {
     console.log('Found update', updateInfo);
-    let releaseNotes;
-    try {
-      let url = ``;
-      let userAgent = 'electron';
-      releaseNotes = JSON.parse(await request({url, headers: {'User-Agent': userAgent}}))
-    } catch (err) {
-      console.log(err)
-    }
-
     this.openUpdaterWindow(this.mainWindow);
     this.forceFocus();
     this.setState({
